@@ -24,7 +24,7 @@ export class Client {
       };
     }
 
-    this.transmitter.request({
+    return await this.transmitter.request({
       service,
       auth: config.auth,
       id: genId(),
