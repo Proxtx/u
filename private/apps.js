@@ -7,7 +7,12 @@ export const loadApps = async () => {
   apps = [];
   for (let appInfo of config.apps) {
     let appImport = await import("../apps/" + appInfo.folder + "/main.js");
-    apps.push(new appImport.App(appInfo.config));
+    let app = new appImport.App(appInfo.config);
+    let definitions = JSON.parse(
+      await fs.readFile("apps/" + appInfo.folder + "/definitions.json", "utf8")
+    );
+    app.definitions = definitions;
+    apps.push(definitions);
   }
 };
 
