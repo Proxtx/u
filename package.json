@@ -1,0 +1,23 @@
+{
+  "name": "u",
+  "version": "1.0.0",
+  "description": "unify core",
+  "main": "main.js",
+  "scripts": {
+    "test": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Proxtx/u.git"
+  },
+  "author": "Proxtx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Proxtx/u/issues"
+  },
+  "homepage": "https://github.com/Proxtx/u#readme",
+  "dependencies": {
+    "@proxtx/config": "^1.0.2",
+    "@proxtx/framework": "^1.5.3"
+  }
+}
