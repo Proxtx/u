@@ -12,7 +12,7 @@ export const loadApps = async () => {
       await fs.readFile("apps/" + appInfo.folder + "/definitions.json", "utf8")
     );
     app.definitions = definitions;
-    apps.push(definitions);
+    apps.push(app);
   }
 };
 
