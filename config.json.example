@@ -1,0 +1,19 @@
+{
+  "port": 3000,
+  "auth": "server_auth",
+  "pwd": "password_to_access_the_api",
+  "clients": {
+    "client_id": {
+      "key": "client_key"
+    }
+  },
+  "apps": [
+    {
+      "folder": "app_folder",
+      "name": "app_name",
+      "config": {
+        
+      }
+    }
+  ]
+}
