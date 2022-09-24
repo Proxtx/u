@@ -10,11 +10,15 @@ export const refreshClients = async () => {
       "../client_receivers/" + client_receiverName + "/main.js"
     );
     let generatedClients = await generateClients(client_receiver);
-    clients = {};
+    clearClients();
     for (let client of generatedClients) {
       clients[client.id] = client;
     }
   }
+};
+
+const clearClients = () => {
+  for (let clientName of clients) delete clients[clientName];
 };
 
 const generateClients = async (client_receiver) => {
