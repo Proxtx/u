@@ -3,14 +3,21 @@ import { Client } from "./client.js";
 
 export let clients = {};
 
-export const refreshClients = async () => {
-  let client_receivers = await fs.readdir("client_receivers");
-  for (let client_receiverName of client_receivers) {
-    let client_receiver = await import(
-      "../client_receivers/" + client_receiverName + "/main.js"
+let client_receivers = [];
+
+const importClientReceivers = async () => {
+  let client_receiver_names = await fs.readdir("client_receivers");
+  for (let client_receiverName of client_receiver_names) {
+    client_receivers.push(
+      await import("../client_receivers/" + client_receiverName + "/main.js")
     );
+  }
+};
+
+export const refreshClients = async () => {
+  clearClients();
+  for (let client_receiver of client_receivers) {
     let generatedClients = await generateClients(client_receiver);
-    clearClients();
     for (let client of generatedClients) {
       clients[client.id] = client;
     }
@@ -38,4 +45,5 @@ const transmitterToClient = async (transmitter) => {
   }
 };
 
+await importClientReceivers();
 await refreshClients();
