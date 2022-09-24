@@ -18,7 +18,7 @@ export const refreshClients = async () => {
 };
 
 const clearClients = () => {
-  for (let clientName of clients) delete clients[clientName];
+  for (let clientName in clients) delete clients[clientName];
 };
 
 const generateClients = async (client_receiver) => {
