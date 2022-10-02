@@ -13,7 +13,9 @@ export const getApps = (pwd) => {
   return config.apps;
 };
 
-export const getDefinitions = (pwd, appIndex) => {
+export const getDefinitions = async (pwd, appIndex) => {
   if (!auth(pwd)) return;
-  return apps[appIndex]?.definitions;
+  let app = apps[appIndex];
+  app.updateDefinitions && (await app.updateDefinitions());
+  return app.definitions;
 };
