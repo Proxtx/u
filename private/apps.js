@@ -14,8 +14,8 @@ export const loadApps = async () => {
         "utf8"
       )
     );
-    appImport.App.prototype.definitions = definitions;
     let appInstance = new appImport.App(appConfig.config);
+    appInstance.definitions = definitions;
     appInstance.updateDefinitions && (await appInstance.updateDefinitions());
     apps[appName] = appInstance;
   }
