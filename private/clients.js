@@ -47,6 +47,13 @@ const generateClients = async (client_receiver) => {
   return clients;
 };
 
+const clientRefreshLoop = async () => {
+  while (true) {
+    await refreshClients();
+    await new Promise((r) => setTimeout(r, 5 * 60 * 1000));
+  }
+};
+
 const transmitterToClient = async (transmitter) => {
   let client = new Client(transmitter);
   let auth;
@@ -61,3 +68,4 @@ const transmitterToClient = async (transmitter) => {
 
 await importClientReceivers();
 await refreshClients();
+clientRefreshLoop();
