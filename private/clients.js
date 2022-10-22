@@ -1,16 +1,25 @@
 import fs from "fs/promises";
 import { Client } from "./client.js";
+import config from "@proxtx/config";
 
 export let clients = {};
 
+let client_receiverClasses = {};
 let client_receivers = [];
 
 const importClientReceivers = async () => {
   let client_receiver_names = await fs.readdir("client_receivers");
   for (let client_receiverName of client_receiver_names) {
-    client_receivers.push(
+    client_receiverClasses[client_receiverName] = (
       await import("../client_receivers/" + client_receiverName + "/main.js")
-    );
+    ).Receiver;
+  }
+
+  for (let client_receiverName in config.client_receivers) {
+    for (let receiverConfig of config.client_receivers[client_receiverName])
+      client_receivers.push(
+        new client_receiverClasses[client_receiverName](receiverConfig)
+      );
   }
 };
 
@@ -29,7 +38,7 @@ const clearClients = () => {
 };
 
 const generateClients = async (client_receiver) => {
-  let transmitters = client_receiver.transmitters;
+  let transmitters = await client_receiver.getTransmitters();
   let clients = [];
   for (let transmitter of transmitters) {
     let client = await transmitterToClient(transmitter);
