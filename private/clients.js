@@ -49,9 +49,14 @@ const generateClients = async (client_receiver) => {
 
 const transmitterToClient = async (transmitter) => {
   let client = new Client(transmitter);
-  if (await client.authenticate()) {
-    return client;
+  let auth;
+  try {
+    auth = await client.authenticate();
+  } catch (e) {
+    return null;
   }
+  if (auth) return client;
+  return null;
 };
 
 await importClientReceivers();
