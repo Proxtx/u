@@ -5,6 +5,8 @@ import config from "@proxtx/config";
 export const execute = async (pwd, appName, method, args) => {
   if (!auth(pwd)) return;
   let app = apps[appName];
+  if (!app.definitions?.methods[method] && app.updateDefinitions)
+    await app.updateDefinitions();
   if (app.definitions?.methods[method]) return await app[method](...args);
 };
 
