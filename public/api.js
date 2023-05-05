@@ -1,23 +1,17 @@
-import { apps } from "../private/apps.js";
+import * as clients from "../private/clients.js";
 import { auth } from "./meta.js";
-import config from "@proxtx/config";
 
-export const execute = async (pwd, appName, method, args) => {
+export const getClients = (pwd) => {
   if (!auth(pwd)) return;
-  let app = apps[appName];
-  if (!app.definitions?.methods[method] && app.updateDefinitions)
-    await app.updateDefinitions();
-  if (app.definitions?.methods[method]) return await app[method](...args);
+  return Object.keys(clients.clients);
 };
 
-export const getApps = (pwd) => {
+export const refreshClients = async (pwd) => {
   if (!auth(pwd)) return;
-  return config.apps;
+  await clients.refreshClients();
 };
 
-export const getDefinitions = async (pwd, appName) => {
+export const request = async (pwd, client, service, data, args) => {
   if (!auth(pwd)) return;
-  let app = apps[appName];
-  app.updateDefinitions && (await app.updateDefinitions());
-  return app.definitions;
+  return await clients.clients[client].request(service, data, args);
 };
