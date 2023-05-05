@@ -24,13 +24,15 @@ const importClientReceivers = async () => {
 };
 
 export const refreshClients = async () => {
-  clearClients();
-
+  let totalClients = [];
   for (let client_receiver of client_receivers) {
     let generatedClients = await generateClients(client_receiver);
-    for (let client of generatedClients) {
-      clients[client.id] = client;
-    }
+    totalClients = totalClients.concat(generatedClients);
+  }
+
+  clearClients();
+  for (let client of totalClients) {
+    clients[client.id] = client;
   }
 };
 
